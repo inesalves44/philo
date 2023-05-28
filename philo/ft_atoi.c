@@ -6,7 +6,7 @@
 /*   By: idias-al <idias-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:06:43 by idias-al          #+#    #+#             */
-/*   Updated: 2023/05/07 10:24:54 by idias-al         ###   ########.fr       */
+/*   Updated: 2023/05/28 11:09:32 by idias-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,3 +57,45 @@ int	ft_atoi(const char *nptr)
 	}
 	return (number * signal);
 }
+
+
+/*t_data	*create_node(t_philo philo, int j, t_data *head)
+{
+	t_data	*test;
+	
+	test = malloc(sizeof(t_data));
+	if (test)
+	{
+		test->i = j;
+		test->time = philo.start_time;
+		test->n_eats = philo.n_eats;
+		test->t_die = philo.t_die;
+		test->t_eating = philo.t_eating;
+		test->t_sleep = philo.t_sleep;
+		test->next = head;
+	}
+	return (test);
+}
+
+t_data	*create_list(t_philo philo)
+{
+	int		i;
+	int		j;
+	t_data	*test;
+	t_data	*head;
+
+	i = 0;
+	j = 1;
+	test = create_node(philo, j, NULL);
+	head = test;
+	j++;
+	i++;
+	while (i < philo.n_philo)
+	{
+		test->next = create_node(philo, j, head);
+		test = test->next;
+		i++;
+		j++;
+	}
+	return (head);
+}*/

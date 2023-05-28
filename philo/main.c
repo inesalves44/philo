@@ -6,7 +6,7 @@
 /*   By: idias-al <idias-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 21:49:53 by idias-al          #+#    #+#             */
-/*   Updated: 2023/05/11 21:36:32 by idias-al         ###   ########.fr       */
+/*   Updated: 2023/05/28 11:14:29 by idias-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,101 +14,84 @@
 
 // PENSAR EM COMO AS THREADS CORREM NO INFINITO E PERCEBER COMO USAR O TEMPO
 
-void	*hello_thread(void	*test1)
+int	isdead(t_philo *philo)
 {
-	t_data	*test;
-
-
-	test = (t_data *)test1;
-	pthread_mutex_lock(&test->mutex);
-	pthread_mutex_lock(&test->next->mutex);
-	printf("Philosopher %d picked up a fork\n", test->i);
-	printf("Philosopher %d is eating\n", test->i);
-	usleep(test->t_eating);
-	test->time += test->t_eating;
-	printf("Philosopher %d went to sleep\n", test->i);
-	pthread_mutex_unlock(&test->mutex);
-	pthread_mutex_unlock(&test->next->mutex);
+	return (1);
 }
 
-void	lets_eat(t_philo philo, t_data *test)
+
+void	*hello_thread(void	*test1)
+{
+	t_philo	*philo;
+	int i = 0;
+
+	philo = (t_philo *)test1;
+	while (i <= 5)
+	{
+		pthread_mutex_lock(&philo->test[philo->test->i].fork);
+		pthread_mutex_lock(&philo->test[philo->test->i + 1].fork);
+		pthread_mutex_lock(&philo->print);
+		printf("Philosopher %d picked up a fork\n", philo->test->i);
+		printf("Philosopher %d is eating\n", philo->test->i);
+		pthread_mutex_unlock(&philo->print);
+		pthread_mutex_unlock(&philo->test[philo->test->i].fork);
+		pthread_mutex_unlock(&philo->test[philo->test->i + 1].fork);
+		usleep(philo->test->t_eating / 10);
+		philo->test->time += philo->test->t_eating;
+		pthread_mutex_lock(&philo->print);
+		printf("Philosopher %d went to sleep\n", philo->test->i);
+		pthread_mutex_unlock(&philo->print);
+		usleep(philo->test->t_sleep / 10);
+		philo->test->time += philo->test->t_sleep;
+		pthread_mutex_lock(&philo->print);
+		printf("Philosopher %d started thinking\n", philo->test->i);
+		pthread_mutex_unlock(&philo->print);
+		i++;
+	}
+	
+}
+
+void	lets_eat(t_philo philo)
 {
 	pthread_t	thephilo[philo.n_philo];
 	int			i;
 	int			time;
 
 	i = 0;
-	time = test->time;
+	pthread_mutex_init(&philo.death, NULL);
+	pthread_mutex_init(&philo.print, NULL);
 	while (i < philo.n_philo)
 	{
-		pthread_mutex_init(&test->mutex, NULL);
-		pthread_create(&(thephilo[i]), NULL, hello_thread, test);
-		time = test->time;
+		philo.test->i = i + 1;
+		philo.test->n_eats = philo.n_eats;
+		pthread_mutex_init(&philo.test[i].fork, NULL);
+		pthread_create(&(thephilo[i]), NULL, hello_thread, &philo[i]);
 		i++;
-		test = test->next;
 	}
 	i = 0;
 	while (i < philo.n_philo)
 	{
 		pthread_join(thephilo[i], NULL);
-		pthread_mutex_destroy(&test->mutex);
+		pthread_mutex_destroy(&philo.test->fork);
 		i++;
-		test = test->next;
 	}
-}
-
-t_data	*create_node(t_philo philo, int j, t_data *head)
-{
-	t_data	*test;
-	
-	test = malloc(sizeof(t_data));
-	if (test)
-	{
-		test->i = j;
-		test->time = philo.start_time;
-		test->n_eats = philo.n_eats;
-		test->t_die = philo.t_die;
-		test->t_eating = philo.t_eating;
-		test->t_sleep = philo.t_sleep;
-		test->next = head;
-	}
-	return (test);
-}
-
-t_data	*create_list(t_philo philo)
-{
-	int		i;
-	int		j;
-	t_data	*test;
-	t_data	*head;
-
-	i = 0;
-	j = 1;
-	test = create_node(philo, j, NULL);
-	head = test;
-	j++;
-	i++;
-	while (i < philo.n_philo)
-	{
-		test->next = create_node(philo, j, head);
-		test = test->next;
-		i++;
-		j++;
-	}
-	return (head);
+	pthread_mutex_destroy(&philo.print);
+	pthread_mutex_destroy(&philo.death);
 }
 
 int	main(int argc, char *argv[])
 {
-	struct timeval	current_time;
 	t_philo			philo;
 	t_data			*test;
+	struct timeval	temp;
 
 	if (argc < 5)
 	{
 		printf("Not enough arguments.\n");
 		return (1);
 	}
+	gettimeofday(&temp, NULL);
+	philo.start_time = temp.tv_sec * 1000 + temp.tv_usec / 1000;
 	philo.n_philo = ft_atoi(argv[1]);
 	philo.t_die = ft_atoi(argv[2]);
 	philo.t_eating = ft_atoi(argv[3]);
@@ -117,10 +100,6 @@ int	main(int argc, char *argv[])
 		philo.n_eats = ft_atoi(argv[5]);
 	else
 		philo.n_eats = -1;
-	gettimeofday(&current_time, NULL);   
-	philo.start_time = current_time.tv_sec * 1000;
-	test = create_list(philo);
-	lets_eat(philo, test);
-	gettimeofday(&current_time, NULL);
+	lets_eat(philo);
 	return (0);
 }
