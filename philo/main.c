@@ -6,7 +6,7 @@
 /*   By: idias-al <idias-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 21:49:53 by idias-al          #+#    #+#             */
-/*   Updated: 2023/05/28 11:14:29 by idias-al         ###   ########.fr       */
+/*   Updated: 2023/05/29 19:15:12 by idias-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,10 @@ void	lets_eat(t_philo philo)
 	pthread_mutex_init(&philo.print, NULL);
 	while (i < philo.n_philo)
 	{
-		philo.test->i = i + 1;
-		philo.test->n_eats = philo.n_eats;
+		philo.test[i].i = i + 1;
+		philo.test[i].n_eats = philo.n_eats;
 		pthread_mutex_init(&philo.test[i].fork, NULL);
-		pthread_create(&(thephilo[i]), NULL, hello_thread, &philo[i]);
+		pthread_create(&(thephilo[i]), NULL, hello_thread, &philo.test[i]);
 		i++;
 	}
 	i = 0;
@@ -90,6 +90,7 @@ int	main(int argc, char *argv[])
 		printf("Not enough arguments.\n");
 		return (1);
 	}
+	//antes disto tudo é necessário verificar se os argumentos são validos----> função
 	gettimeofday(&temp, NULL);
 	philo.start_time = temp.tv_sec * 1000 + temp.tv_usec / 1000;
 	philo.n_philo = ft_atoi(argv[1]);
@@ -100,6 +101,8 @@ int	main(int argc, char *argv[])
 		philo.n_eats = ft_atoi(argv[5]);
 	else
 		philo.n_eats = -1;
+	//aqui falta alocar dinamicamente a memomria para philo. ---> philo.test = malloc(argv[1] * t_data)
+	philo.test = malloc(philo.n_philo * sizeof(t_data));
 	lets_eat(philo);
 	return (0);
 }
