@@ -6,7 +6,7 @@
 /*   By: idias-al <idias-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:06:43 by idias-al          #+#    #+#             */
-/*   Updated: 2023/05/28 11:09:32 by idias-al         ###   ########.fr       */
+/*   Updated: 2023/05/31 10:38:30 by idias-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,13 @@ int	ft_atoi(const char *nptr)
 	return (number * signal);
 }
 
+int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	else
+		return (0);
+}
 
 /*t_data	*create_node(t_philo philo, int j, t_data *head)
 {
