@@ -6,102 +6,82 @@
 /*   By: idias-al <idias-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 10:15:34 by idias-al          #+#    #+#             */
-/*   Updated: 2023/05/31 16:15:30 by idias-al         ###   ########.fr       */
+/*   Updated: 2023/06/05 20:13:11 by idias-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 /**
- * @note This function checks if the argument passed is only digits  
- * @param argument -> a string to test
- * @return -> 0 if the strings has only digits, 1 if not 
+ * @brief 
+ * 
+ * @param philo 
+ * @return int 
  */
-
-int	check_digits(char *argument)
+int	is_dead(t_philo *philo)
 {
-	int	i;
+	int		time;
 
-	i = 0;
-	while (argument[i] != '\0')
+	if (philo->n_eats != -1 && philo->counting_eats == philo->n_eats)
+		return (1);
+	time = get_time();
+	if (time - philo->t_eating > philo->data->t_die)
 	{
-		if (!ft_isdigit(argument[i]))
-			return (1);
-		i++;
+		printf("\n%d IS DEAD\n", philo->i);
+		return (1);
 	}
 	return (0);
 }
 
 /** 
- * @note  this function checks if the arguments are ok and gives values to data
- * @param data -> the struct that keeps the values
- * @param argc -> number of arguments gives
- * @param argv -> string of strings with the arguments
- * @return -> returns 0 if everything is good, 1 if not.
- */
-
-int	init_var(t_data *data, int argc, char *argv[])
-{
-	int	i;
-	struct timeval	temp;
-	
-	i = 1;
-	while (i < argc)
-	{
-		if (check_digits(argv[i]))
-			return (1);
-		i++;
-	}
-	data->n_philo = ft_atoi(argv[1]);
-	data->t_die = ft_atoi(argv[2]);
-	data->t_eating = ft_atoi(argv[3]);
-	data->t_sleep = ft_atoi(argv[4]);
-	if (argc == 6)
-		data->n_eats = ft_atoi(argv[5]);
-	else
-		data->n_eats = -1;
-	gettimeofday(&temp, NULL);
-	data->start_time = temp.tv_sec * 1000 + temp.tv_usec / 1000;
-	return (0);
-}
-
-/** 
- * @brief  
- * @note   
- * @param data ->
- * @param argc ->
- * @param argv ->
- * @return 
+ * @note -> the function that is called when threads are created 
+ * @param philo1 -> struct for one philosopher
+ * @return -> a void *
  */
 void	*philo(void *philo1)
 {
 	t_philo *philo;
-	int		i;
 
 	philo = (t_philo *)philo1;
-	i = 0;
-	//while (i < 5)
-	//{
+	while (!is_dead(philo))
+	{
+		//lock garfos
 		pthread_mutex_lock(&philo->f_left);
 		pthread_mutex_lock(philo->f_right);
-		//pthread_mutex_lock(&philo->data->print);
-		printf("Pick up fork %d\n", philo->i);
-		//pthread_mutex_unlock(&philo->data->print);
-		usleep(450000);
+		
+		//deixa-lo comer
+		pthread_mutex_lock(&philo->data->print);
+		printf("%d picked up the forks\n", philo->i);
+		printf("%d started eating\n", philo->i);
+		pthread_mutex_unlock(&philo->data->print);
+		
+		//esta a comer e depois acaba de comer
+		usleep(philo->data->t_eating * 1000);
 		pthread_mutex_unlock(&philo->f_left);
 		pthread_mutex_unlock(philo->f_right);
-		i++;
-	//}
+
+		//dá o tempo da ultima comida
+		philo->t_eating = get_time();
+		
+		//vai dormir por x tempo
+		pthread_mutex_lock(&philo->data->print);
+		printf("%d went to sleep\n", philo->i);
+		pthread_mutex_unlock(&philo->data->print);
+		usleep(philo->data->t_sleep * 1000);
+
+		//vamos pensar
+		pthread_mutex_lock(&philo->data->print);
+		printf("%d is thinking\n", philo->i);
+		pthread_mutex_unlock(&philo->data->print);
+		philo->counting_eats++;
+	}
 	return ((void *)0);
 }
 
 /** 
- * @brief  
- * @note   
- * @param data ->
- * @param argc ->
- * @param argv ->
- * @return 
+ * @note this function start the threads that we need for the philosopher's
+ * @param data ->struct that has the data from the arguments
+ * @return -> 1 if error, 0 if ok
  */
 int	starting_threads(t_data data)
 {
@@ -116,11 +96,13 @@ int	starting_threads(t_data data)
 	{
 		data.philo[i].i = i + 1;
 		data.philo[i].n_eats = data.n_eats;
+		data.philo[i].counting_eats = 0;
 		data.philo[i].data = &data;
-		if (i > 0)
-			data.philo[i].f_right = &data.philo[i - 1].f_left;
+		data.philo[i].t_eating = data.t_eating;
+		if (i != data.n_philo - 1)
+			data.philo[i].f_right = &data.philo[i + 1].f_left;
 		else
-			data.philo[i].f_right = &data.philo[data.n_philo - 1].f_left;
+			data.philo[i].f_right = &data.philo[0].f_left;
 		pthread_mutex_init(&data.philo[i].f_left, NULL);
 		if (pthread_create(&(thephilo[i]), NULL, philo, &data.philo[i]) < 0)
 			return (1);

@@ -6,7 +6,7 @@
 /*   By: idias-al <idias-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 21:51:39 by idias-al          #+#    #+#             */
-/*   Updated: 2023/05/31 15:13:04 by idias-al         ###   ########.fr       */
+/*   Updated: 2023/06/05 19:53:06 by idias-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ typedef	struct s_philo
 	int				i;
 	pthread_mutex_t	f_left;
 	pthread_mutex_t	*f_right;
-	int				t_die;
-	int				t_sleep;
+	int				counting_eats;
 	int				t_eating;
 	int				n_eats;
 	int				time;
@@ -48,5 +47,8 @@ typedef struct s_data
 
 int	ft_atoi(const char *nptr);
 int	ft_isdigit(int c);
+int	init_var(t_data *data, int argc, char *argv[]);
+int	check_digits(char *argument);
+int	get_time(void);
 
 #endif
