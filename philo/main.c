@@ -6,7 +6,7 @@
 /*   By: idias-al <idias-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 10:15:34 by idias-al          #+#    #+#             */
-/*   Updated: 2023/06/05 20:13:11 by idias-al         ###   ########.fr       */
+/*   Updated: 2023/06/09 18:03:07 by idias-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	is_dead(t_philo *philo)
 	if (philo->n_eats != -1 && philo->counting_eats == philo->n_eats)
 		return (1);
 	time = get_time();
-	if (time - philo->t_eating > philo->data->t_die)
+	if (time - philo->t_eating < philo->data->t_die)
 	{
 		printf("\n%d IS DEAD\n", philo->i);
 		return (1);
@@ -48,7 +48,7 @@ void	*philo(void *philo1)
 		//lock garfos
 		pthread_mutex_lock(&philo->f_left);
 		pthread_mutex_lock(philo->f_right);
-		
+
 		//deixa-lo comer
 		pthread_mutex_lock(&philo->data->print);
 		printf("%d picked up the forks\n", philo->i);
@@ -98,7 +98,7 @@ int	starting_threads(t_data data)
 		data.philo[i].n_eats = data.n_eats;
 		data.philo[i].counting_eats = 0;
 		data.philo[i].data = &data;
-		data.philo[i].t_eating = data.t_eating;
+		data.philo[i].t_eating = data.start_time;
 		if (i != data.n_philo - 1)
 			data.philo[i].f_right = &data.philo[i + 1].f_left;
 		else

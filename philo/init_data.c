@@ -6,7 +6,7 @@
 /*   By: idias-al <idias-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 17:05:38 by idias-al          #+#    #+#             */
-/*   Updated: 2023/06/05 18:17:19 by idias-al         ###   ########.fr       */
+/*   Updated: 2023/06/09 17:59:39 by idias-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,12 @@ int	init_var(t_data *data, int argc, char *argv[])
 
 /**
  * @brief Get the time object
- * 
  * @return int 
  */
-int	get_time(void)
+unsigned long long	get_time(void)
 {
-	struct timeval	temp;
-	int				time;
+	struct timeval		temp;
+	unsigned long long	time;
 
 	gettimeofday(&temp, NULL);
 	time = temp.tv_sec * 1000 + temp.tv_usec / 1000;
