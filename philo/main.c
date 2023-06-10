@@ -6,7 +6,7 @@
 /*   By: idias-al <idias-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 10:15:34 by idias-al          #+#    #+#             */
-/*   Updated: 2023/06/09 18:03:07 by idias-al         ###   ########.fr       */
+/*   Updated: 2023/06/10 12:02:04 by idias-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ int	starting_threads(t_data data)
 			data.philo[i].f_right = &data.philo[i + 1].f_left;
 		else
 			data.philo[i].f_right = &data.philo[0].f_left;
+		if (data.n_philo == 1)
+			pthread_mutex_init(data.philo[i].f_right, NULL);
 		pthread_mutex_init(&data.philo[i].f_left, NULL);
 		if (pthread_create(&(thephilo[i]), NULL, philo, &data.philo[i]) < 0)
 			return (1);
@@ -112,7 +114,9 @@ int	starting_threads(t_data data)
 	while (i < data.n_philo)
 	{
 		pthread_join(thephilo[i], NULL);
-		pthread_mutex_destroy(&data.philo->f_left);
+		pthread_mutex_destroy(&data.philo[i].f_left);
+		if (data.n_philo == 1)
+			pthread_mutex_destroy(data.philo[0].f_right);
 		i++;
 	}
 	pthread_mutex_destroy(&data.print);
