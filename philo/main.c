@@ -6,11 +6,25 @@
 /*   By: idias-al <idias-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 10:15:34 by idias-al          #+#    #+#             */
-/*   Updated: 2023/06/10 12:02:04 by idias-al         ###   ########.fr       */
+/*   Updated: 2023/06/17 13:58:02 by idias-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+/**
+ * @brief This function locks the printf function and then prints the message
+ * @param i -> number of philos
+ * @param time_stamp -> the current time of the program
+ * @param msg -> the message that gives the state of the philo
+ * @param data -> the place where we have the mutex print
+ */
+void	print_msg(int i, long long int time_stamp, char *msg, t_data *data)
+{
+	pthread_mutex_lock(&data->print);
+	printf("%lld %d %s\n", time_stamp, i, msg);
+	pthread_mutex_unlock(&data->print);
+}
 
 /**
  * @brief 
@@ -20,21 +34,23 @@
  */
 int	is_dead(t_philo *philo)
 {
-	int		time;
+	long long int		time;
 
-	if (philo->n_eats != -1 && philo->counting_eats == philo->n_eats)
+	if (philo->counting_eats == philo->n_eats)
 		return (1);
 	time = get_time();
-	if (time - philo->t_eating < philo->data->t_die)
+	printf("%lld value of time for %i\n", time - philo->t_eating, philo->i);
+	printf("%d", philo->data->t_die);
+	if (time - philo->t_eating > philo->data->t_die)
 	{
-		printf("\n%d IS DEAD\n", philo->i);
+		print_msg(philo->i, get_time() - philo->data->start_time, "has died", philo->data);
 		return (1);
 	}
 	return (0);
 }
 
 /** 
- * @note -> the function that is called when threads are created 
+ * @note -> the function that is called when philo threads are created 
  * @param philo1 -> struct for one philosopher
  * @return -> a void *
  */
@@ -46,34 +62,60 @@ void	*philo(void *philo1)
 	while (!is_dead(philo))
 	{
 		//lock garfos
-		pthread_mutex_lock(&philo->f_left);
-		pthread_mutex_lock(philo->f_right);
+		if (philo->i % 2 == 0)
+			pthread_mutex_lock(&philo->f_left);
+		else
+			pthread_mutex_lock(philo->f_right);
+		print_msg(philo->i, get_time() - philo->data->start_time, "has taken a fork", philo->data);
+		if (philo->i % 2 == 0)
+			pthread_mutex_lock(philo->f_right);
+		else
+			pthread_mutex_lock(&philo->f_left);
+		print_msg(philo->i, get_time() - philo->data->start_time, "has taken a fork", philo->data);
 
+		if (is_dead(philo))
+			break;		
 		//deixa-lo comer
-		pthread_mutex_lock(&philo->data->print);
-		printf("%d picked up the forks\n", philo->i);
-		printf("%d started eating\n", philo->i);
-		pthread_mutex_unlock(&philo->data->print);
-		
+		print_msg(philo->i, get_time() - philo->data->start_time, "is eating", philo->data);
+
 		//esta a comer e depois acaba de comer
 		usleep(philo->data->t_eating * 1000);
-		pthread_mutex_unlock(&philo->f_left);
-		pthread_mutex_unlock(philo->f_right);
-
+		
+				
 		//dá o tempo da ultima comida
 		philo->t_eating = get_time();
 		
+		//unlock the forks
+		if (philo->i %2 == 0)
+			pthread_mutex_unlock(&philo->f_left);
+		else
+			pthread_mutex_unlock(philo->f_right);
+
+		if (philo->i %2 == 0)
+			pthread_mutex_unlock(philo->f_right);
+		else
+			pthread_mutex_unlock(&philo->f_left);
+		
 		//vai dormir por x tempo
-		pthread_mutex_lock(&philo->data->print);
-		printf("%d went to sleep\n", philo->i);
-		pthread_mutex_unlock(&philo->data->print);
+		print_msg(philo->i, get_time() - philo->data->start_time, "is sleeping",philo->data);
 		usleep(philo->data->t_sleep * 1000);
 
 		//vamos pensar
-		pthread_mutex_lock(&philo->data->print);
-		printf("%d is thinking\n", philo->i);
-		pthread_mutex_unlock(&philo->data->print);
+		print_msg(philo->i, get_time() - philo->data->start_time, "is thinking",philo->data);
+
 		philo->counting_eats++;
+	}
+	return ((void *)0);
+}
+
+void	*control_thread(void * data1)
+{
+	t_data *data;
+
+	data = (t_data *) data1;
+	while (1)
+	{
+		
 	}
 	return ((void *)0);
 }
@@ -85,7 +127,8 @@ void	*philo(void *philo1)
  */
 int	starting_threads(t_data data)
 {
-	pthread_t	thephilo[data.n_philo];
+	pthread_t	thephilo[data.n_philo]; 
+	pthread_t	aux;
 	int			i;
 
 	i = 0;
@@ -103,13 +146,12 @@ int	starting_threads(t_data data)
 			data.philo[i].f_right = &data.philo[i + 1].f_left;
 		else
 			data.philo[i].f_right = &data.philo[0].f_left;
-		if (data.n_philo == 1)
-			pthread_mutex_init(data.philo[i].f_right, NULL);
 		pthread_mutex_init(&data.philo[i].f_left, NULL);
 		if (pthread_create(&(thephilo[i]), NULL, philo, &data.philo[i]) < 0)
 			return (1);
 		i++;
 	}
+	pthread_create(&aux, NULL, control_thread, &data);
 	i = 0;
 	while (i < data.n_philo)
 	{

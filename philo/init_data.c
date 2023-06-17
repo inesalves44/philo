@@ -6,7 +6,7 @@
 /*   By: idias-al <idias-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 17:05:38 by idias-al          #+#    #+#             */
-/*   Updated: 2023/06/09 17:59:39 by idias-al         ###   ########.fr       */
+/*   Updated: 2023/06/17 12:21:36 by idias-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	check_digits(char *argument)
 /** 
  * @note  this function checks if the arguments are ok and gives values to the data struct
  * @param data -> the struct that keeps the values
- * @param argc -> number of arguments gives
+ * @param argc -> number of arguments given
  * @param argv -> string of strings with the arguments
  * @return -> returns 0 if everything is good, 1 if not.
  */
