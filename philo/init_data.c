@@ -6,7 +6,7 @@
 /*   By: idias-al <idias-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 17:05:38 by idias-al          #+#    #+#             */
-/*   Updated: 2023/06/17 12:21:36 by idias-al         ###   ########.fr       */
+/*   Updated: 2023/06/18 11:30:46 by idias-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ int	init_var(t_data *data, int argc, char *argv[])
 	else
 		data->n_eats = -1;
 	data->start_time = get_time();
+	data->control = 0;
+	data->philo = malloc(data->n_philo * sizeof(t_philo));
 	return (0);
 }
 

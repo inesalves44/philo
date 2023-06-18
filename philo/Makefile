@@ -6,11 +6,11 @@
 #    By: idias-al <idias-al@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/31 10:03:36 by idias-al          #+#    #+#              #
-#    Updated: 2023/05/31 17:08:23 by idias-al         ###   ########.fr        #
+#    Updated: 2023/06/18 10:55:52 by idias-al         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-OBJS  =  ft_atoi.o main.o init_data.o
+OBJS  =  ft_atoi.o main.o init_data.o philo.o
 NAME = philo
 CC = cc
 CFLAGS = -g #-Wextra -Werror -Wall
