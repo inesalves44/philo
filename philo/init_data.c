@@ -6,7 +6,7 @@
 /*   By: idias-al <idias-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 17:05:38 by idias-al          #+#    #+#             */
-/*   Updated: 2023/06/18 11:30:46 by idias-al         ###   ########.fr       */
+/*   Updated: 2023/06/19 20:02:46 by idias-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	init_var(t_data *data, int argc, char *argv[])
 	}
 	data->n_philo = ft_atoi(argv[1]);
 	data->t_die = ft_atoi(argv[2]);
-	data->t_eating = ft_atoi(argv[3]);
+	data->t_eat = ft_atoi(argv[3]);
 	data->t_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		data->n_eats = ft_atoi(argv[5]);

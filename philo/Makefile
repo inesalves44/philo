@@ -6,14 +6,14 @@
 #    By: idias-al <idias-al@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/31 10:03:36 by idias-al          #+#    #+#              #
-#    Updated: 2023/06/18 10:55:52 by idias-al         ###   ########.fr        #
+#    Updated: 2023/06/19 22:57:14 by idias-al         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-OBJS  =  ft_atoi.o main.o init_data.o philo.o
+OBJS  =  ft_atoi.o main.o init_data.o philo.o actions.o threads.o
 NAME = philo
 CC = cc
-CFLAGS = -g #-Wextra -Werror -Wall
+CFLAGS = -g -Wextra -Werror -Wall -fsanitize=thread
 GREEN           :=      \033[0;32m
 RED             :=      \033[1;31m
 WHITE           :=      \033[1;37m
