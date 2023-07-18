@@ -6,7 +6,7 @@
 /*   By: idias-al <idias-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 10:15:34 by idias-al          #+#    #+#             */
-/*   Updated: 2023/06/19 22:47:39 by idias-al         ###   ########.fr       */
+/*   Updated: 2023/07/17 21:49:40 by idias-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,30 @@
  */
 int	starting_threads(t_data data)
 {
+	pthread_mutex_init(&data.death, NULL);
+	pthread_mutex_init(&data.print, NULL);
+	pthread_mutex_init(&data.test, NULL);
+	pthread_mutex_init(&data.mstart_time, NULL);
 	create_philos(&data);
 	if (data.n_philo == 1)
 	{
 		if (thread_one_philo(data))
 			return (1);
-		
 	}
 	else if (data.n_philo > 1)
 	{
-		if (thread_multi_philo(data))
-			return(1);
+		if (thread_multi_philo(&data))
+			return (1);
 	}
 	pthread_mutex_destroy(&data.print);
 	pthread_mutex_destroy(&data.death);
+	pthread_mutex_destroy(&data.test);
+	pthread_mutex_destroy(&data.mstart_time);
 	free(data.philo);
 	return (0);
 }
- 
 
-int main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
 	t_data	data;
 
@@ -57,5 +61,5 @@ int main(int argc, char *argv[])
 		printf("Threads error!\n");
 		return (1);
 	}
-	return (0);	
+	return (0);
 }

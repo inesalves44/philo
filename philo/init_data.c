@@ -6,7 +6,7 @@
 /*   By: idias-al <idias-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 17:05:38 by idias-al          #+#    #+#             */
-/*   Updated: 2023/06/19 20:02:46 by idias-al         ###   ########.fr       */
+/*   Updated: 2023/07/17 21:49:12 by idias-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	check_digits(char *argument)
 }
 
 /** 
- * @note  this function checks if the arguments are ok and gives values to the data struct
+ * @note  this function checks if the arguments are ok and gives values to 
+ * the data struct
  * @param data -> the struct that keeps the values
  * @param argc -> number of arguments given
  * @param argv -> string of strings with the arguments
@@ -41,7 +42,7 @@ int	check_digits(char *argument)
 int	init_var(t_data *data, int argc, char *argv[])
 {
 	int	i;
-	
+
 	i = 1;
 	while (i < argc)
 	{
@@ -75,4 +76,35 @@ unsigned long long	get_time(void)
 	gettimeofday(&temp, NULL);
 	time = temp.tv_sec * 1000 + temp.tv_usec / 1000;
 	return (time);
+}
+
+/**
+ * @brief Create a philos object
+ * @param data -> the complete struct for philo
+ */
+void	create_philos(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	data->philo = malloc(data->n_philo * sizeof(t_philo));
+	while (i < data->n_philo)
+	{
+		data->philo[i].i = i + 1;
+		data->philo[i].counting_eats = 0;
+		data->philo[i].data = data;
+		data->philo[i].last_meal = data->start_time;
+		data->philo[i].status = ALIVE;
+		data->philo[i].start_time = get_time();
+		if (i != data->n_philo - 1 && data->n_philo > 1)
+			data->philo[i].f_right = &data->philo[i + 1].f_left;
+		else if (i == data->n_philo - 1 && data->n_philo > 1)
+			data->philo[i].f_right = &data->philo[0].f_left;
+		else if (data->n_philo == 1)
+			data->philo->f_right = NULL;
+		pthread_mutex_init(&data->philo[i].f_left, NULL);
+		pthread_mutex_init(&data->philo[i].m_count_eats, NULL);
+		pthread_mutex_init(&data->philo[i].m_status, NULL);
+		i++;
+	}
 }
