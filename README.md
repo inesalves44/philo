@@ -6,7 +6,8 @@ Philosophers is a project of the common core in school 42.
 
 The assignment involves a scenario where philosophers sit around a table with a bowl of spaghetti and forks. They alternate between eating, thinking, and sleeping. Philosophers can eat only if they have both adjacent forks. They put down forks after eating, then sleep and think. Simulation stops if a philosopher starves. The challenge is to ensure all philosophers eat without starving, while handling synchronization and avoiding deadlock. 
 Philosophers don't communicate, know about others' state, or need to die. The main goal is to design a solution that prevents philosophers from starving.
-[philos](https://austingwalters.com/wp-content/uploads/2014/05/Dining_philosophers4-right-987x1024.png)
+
+![philos](https://austingwalters.com/wp-content/uploads/2014/05/Dining_philosophers4-right-987x1024.png)
 
 ## 2. Rules
 The program accepts the following input arguments:
