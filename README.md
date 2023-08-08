@@ -6,56 +6,40 @@ Philosophers is a project of the common core in school 42.
 
 The assignment involves a scenario where philosophers sit around a table with a bowl of spaghetti and forks. They alternate between eating, thinking, and sleeping. Philosophers can eat only if they have both adjacent forks. They put down forks after eating, then sleep and think. Simulation stops if a philosopher starves. The challenge is to ensure all philosophers eat without starving, while handling synchronization and avoiding deadlock. 
 Philosophers don't communicate, know about others' state, or need to die. The main goal is to design a solution that prevents philosophers from starving.
+[philos](https://austingwalters.com/wp-content/uploads/2014/05/Dining_philosophers4-right-987x1024.png)
 
 ## 2. Rules
-Your(s) program(s) should take the following arguments:
-number_of_philosophers time_to_die time_to_eat time_to_sleep
-[number_of_times_each_philosopher_must_eat]
-◦ number_of_philosophers: The number of philosophers and also the number
-of forks.
-◦ time_to_die (in milliseconds): If a philosopher didn’t start eating time_to_die
-milliseconds since the beginning of their last meal or the beginning of the sim-
-ulation, they die.
-◦ time_to_eat (in milliseconds): The time it takes for a philosopher to eat.
-During that time, they will need to hold two forks.
-◦ time_to_sleep (in milliseconds): The time a philosopher will spend sleeping.
-◦ number_of_times_each_philosopher_must_eat (optional argument): If all
-philosophers have eaten at least number_of_times_each_philosopher_must_eat
-times, the simulation stops. If not specified, the simulation stops when a
-philosopher dies.
-• Each philosopher has a number ranging from 1 to number_of_philosophers.
-• Philosopher number 1 sits next to philosopher number number_of_philosophers.
-Any other philosopher number N sits between philosopher number N - 1 and philoso-
-pher number N + 1.
-6
-Philosophers I never thought philosophy would be so deadly
-About the logs of your program:
-• Any state change of a philosopher must be formatted as follows:
-◦ timestamp_in_ms X has taken a fork
-◦ timestamp_in_ms X is eating
-◦ timestamp_in_ms X is sleeping
-◦ timestamp_in_ms X is thinking
-◦ timestamp_in_ms X died
-Replace timestamp_in_ms with the current timestamp in milliseconds
-and X with the philosopher number.
-• A displayed state message should not be mixed up with another message.
-• A message announcing a philosopher died should be displayed no more than 10 ms
-after the actual death of the philosopher.
-• Again, philosophers should avoid dy
+The program accepts the following input arguments:
+
+1. `number_of_philosophers`: This represents both the count of philosophers and the number of forks available.
+2. `time_to_die` (in milliseconds): If a philosopher hasn't started eating within `time_to_die` milliseconds since their last meal or since the start of the simulation, they will die.
+3. `time_to_eat` (in milliseconds): The duration it takes for a philosopher to finish eating. During this time, they must hold two forks.
+4. `time_to_sleep` (in milliseconds): The time a philosopher spends sleeping.
+5. `number_of_times_each_philosopher_must_eat` (optional): If specified, the simulation ends when all philosophers have eaten at least this many times. If not provided, the simulation stops when a philosopher dies.
+
+- The output of the program looks something like this:
+  - `timestamp_in_ms X has taken a fork`
+  - `timestamp_in_ms X is eating`
+  - `timestamp_in_ms X is sleeping`
+  - `timestamp_in_ms X is thinking`
+  - `timestamp_in_ms X died`
+  Replace `timestamp_in_ms` with the current timestamp in milliseconds and `X` with the philosopher number.
 
 ## 3. The Project
-To implement this project well we needed to create a few key elements: a lexer, a parser, an expander, a treatement for redirection and for commands/pipes.
+
 
 ## 4. Execution
 To run the philosospher's you just need to run make! 
 Then ./philo. And there we go!
-
+```
+./philo 5 200 800 800 7
+ ```
 
 ## Make Commands
 ```
-make all - creates executable minishell
+make all - creates executable philo
 make clean - cleans the objects
-make fclean - clean executable and any library, also runs clean
+make fclean - cleans executable, also runs clean
 make re - runs clean and fclean and then runs all to create the executable
  ```
  
