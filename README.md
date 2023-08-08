@@ -27,6 +27,10 @@ The program accepts the following input arguments:
   Replace `timestamp_in_ms` with the current timestamp in milliseconds and `X` with the philosopher number.
 
 ## 3. The Project
+We can separate this projetc into three parts!
+
+### 1) Threating the input
+For the first part of this we needto make sure that the input is in it's correct format.
 
 
 ## 4. Execution
