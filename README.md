@@ -29,9 +29,22 @@ The program accepts the following input arguments:
 ## 3. The Project
 We can separate this projetc into three parts!
 
-### 1) Threating the input
+### 3.1 Threating the input
 For the first part of this we needto make sure that the input is in it's correct format.
 
+Checking if there is at least 5 arguments and maximum 6. 
+
+And then make sure that the arguments have only numbers.
+
+### 3.2 Creating the structs and Threads
+To make this problem work I had to create two structs, one with all the data necessary and another for the philosopher's.checks if a philosopher
+As it is stated in the subject the philosopher's can't communicate with eachother. So besides all the philo thread there has to be another one that checks if any philosopher has died.
+To check death there is an enum that each philo has.
+
+### 3.3. Executing the program
+Now the philos can execute eat, think and sleep. 
+
+Each action has a formula associated. The program only stops when aphilosopher dies! 
 
 ## 4. Execution
 To run the philosospher's you just need to run make! 
