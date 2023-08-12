@@ -4,8 +4,8 @@
 
 Philosophers is a project of the common core in school 42.
 
-The assignment involves a scenario where philosophers sit around a table with a bowl of spaghetti and forks. They alternate between eating, thinking, and sleeping. Philosophers can eat only if they have both adjacent forks. They put down forks after eating, then sleep and think. Simulation stops if a philosopher starves. The challenge is to ensure all philosophers eat without starving, while handling synchronization and avoiding deadlock. 
-Philosophers don't communicate, know about others' state, or need to die. The main goal is to design a solution that prevents philosophers from starving.
+The assignment involves a scenario where philosophers sit around a table with a bowl of spaghetti and forks. They alternate between eating, thinking, and sleeping. Philosophers can eat only if they have both adjacent forks. They put down forks after eating, then sleep and think. The simulation stops if a philosopher starves. The challenge is to ensure all philosophers eat without starving while handling synchronization and avoiding deadlock. 
+Philosophers don't communicate, or know about others' states, or need to die. The main goal is to design a solution that prevents philosophers from starving.
 
 ![philos](https://docs.microsoft.com/en-us/cpp/parallel/concrt/media/dining_philosophersproblem.png?view=msvc-170&viewFallbackFrom=vs-2019)
 
@@ -68,6 +68,13 @@ make re - runs clean and fclean and then runs all to create the executable
  ```
  
  ## Links
- 
- 
- Feel free to slack me: idias-al.
+
+[Theads in C](https://www.geeksforgeeks.org/thread-functions-in-c-c/)
+
+[Multitheads in C](https://www.geeksforgeeks.org/multithreading-in-c/)
+
+[Mutex in C](https://www.geeksforgeeks.org/mutex-lock-for-linux-thread-synchronization
+
+[Greate explanation from 42 student (Jamshidbek2000)](https://www.youtube.com/watch?v=UGQsvVKwe90&t=2s)
+
+Feel free to slack me: idias-al.
