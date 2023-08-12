@@ -27,28 +27,34 @@ The program accepts the following input arguments:
   Replace `timestamp_in_ms` with the current timestamp in milliseconds and `X` with the philosopher number.
 
 ## 3. The Project
-We can separate this projetc into three parts!
+We can separate this project into three parts!
 
 ### 3.1 Threating the input
-For the first part of this we needto make sure that the input is in it's correct format.
+For the first part of this, we need to make sure that the input is in its correct format.
 
-Checking if there is at least 5 arguments and maximum 6. 
+Checking if there are at least 5 arguments and a maximum of 6. 
 
 And then make sure that the arguments have only numbers.
 
-### 3.2 Creating the structs and Threads
-To make this problem work I had to create two structs, one with all the data necessary and another for the philosopher's.checks if a philosopher
-As it is stated in the subject the philosopher's can't communicate with eachother. So besides all the philo thread there has to be another one that checks if any philosopher has died.
-To check death there is an enum that each philo has.
+### 3.2 Creating the Structs and Threads
+To solve this problem I had to create two structs, one with all the data necessary and common to all philosophers and another for each philosopher. 
+
+As for the threads we have one thread per philosopher (as stated in the subject) and a control thread. It is the control thread that checks if a philosopher died and then, 
+stops the program.
 
 ### 3.3. Executing the program
-Now the philos can execute eat, think and sleep. 
+With the threads created, we can run the program!
 
-Each action has a formula associated. The program only stops when aphilosopher dies! 
+To ensure the aren't data races there are mutexes throughout the code. (You can check the mutexes in the header file)
+
+To avoid deadlocks the philosophers  take the forks in a different order. Even philosophers take first the left fork, and then the right, the odd take the forks the other way around.
+
+With all this, the philosophers can run smoothly.
 
 ## 4. Execution
-To run the philosospher's you just need to run make! 
+To run the philosophers you just need to write make! 
 Then ./philo. And there we go!
+
 ```
 ./philo 5 200 800 800 7
  ```
@@ -62,12 +68,6 @@ make re - runs clean and fclean and then runs all to create the executable
  ```
  
  ## Links
- [42 Docs](https://harm-smits.github.io/42docs/projects/minishell)
  
- [Parsing tree](https://www.geeksforgeeks.org/parse-tree-and-syntax-tree/)
- 
- [Shell Language](https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html)
- 
- [Writing a shell example](https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf)
  
  Feel free to slack me: idias-al.
