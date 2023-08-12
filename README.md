@@ -73,7 +73,7 @@ make re - runs clean and fclean and then runs all to create the executable
 
 [Multitheads in C](https://www.geeksforgeeks.org/multithreading-in-c/)
 
-[Mutex in C](https://www.geeksforgeeks.org/mutex-lock-for-linux-thread-synchronization
+[Mutex in C](https://www.geeksforgeeks.org/mutex-lock-for-linux-thread-synchronization)
 
 [Greate explanation from 42 student (Jamshidbek2000)](https://www.youtube.com/watch?v=UGQsvVKwe90&t=2s)
 
