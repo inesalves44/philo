@@ -6,16 +6,16 @@
 /*   By: idias-al <idias-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 23:22:00 by idias-al          #+#    #+#             */
-/*   Updated: 2023/07/17 23:47:41 by idias-al         ###   ########.fr       */
+/*   Updated: 2023/08/12 11:03:26 by idias-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 /**
- * @brief sees if a philo is dead
- * @param data 
- * @return int 
+ * @brief sees if a philo is dead and changes the control variable to one.
+ * @param data -> complete struct of philosopher's data
+ * @return int -> 0if all are alive, 0 if one is dead
  */
 int	is_any_philo_dead(t_data *data)
 {
@@ -67,9 +67,9 @@ int	check_counting_eats(t_data *data)
 }
 
 /**
- * @brief control thread 
- * @param data1 
- * @return void* 
+ * @brief control thread, checks if any philo is dead and counts how many times 
+ * they have eaten
+ * @param data1 -> complete data struct
  */
 void	*checking_philos(void *data1)
 {

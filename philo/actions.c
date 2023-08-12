@@ -6,7 +6,7 @@
 /*   By: idias-al <idias-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:26:51 by idias-al          #+#    #+#             */
-/*   Updated: 2023/07/18 18:35:44 by idias-al         ###   ########.fr       */
+/*   Updated: 2023/08/12 11:07:42 by idias-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,11 @@ int	is_dead(t_philo *philo)
 }
 
 /**
- * @brief Get the the forks object
- * 
- * @param philo 
- * @return int 
+ * @brief This function is created to get the forks. To avoid deadlocks,
+ * the even philos get the left first and then the right, the odd onesget them the other way
+ * around.This also locks each fork.
+ * @param philo -> struct for one philo.
+ * @return int -> 1 if the philo is dead, 0 if everything is algright
  */
 int	get_the_forks(t_philo *philo)
 {
@@ -126,10 +127,8 @@ int	get_the_forks(t_philo *philo)
 }
 
 /**
- * @brief 
- * 
- * @param philo 
- * @return int 
+ * @brief THis funtion makes the philo eat. And after, unlocks the forks.
+ * @param philo -> struct for one philo.
  */
 int	eat_philo(t_philo *philo)
 {

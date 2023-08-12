@@ -6,7 +6,7 @@
 /*   By: idias-al <idias-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 17:05:38 by idias-al          #+#    #+#             */
-/*   Updated: 2023/07/17 21:49:12 by idias-al         ###   ########.fr       */
+/*   Updated: 2023/08/12 10:59:49 by idias-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ int	init_var(t_data *data, int argc, char *argv[])
 }
 
 /**
- * @brief Get the time object
- * @return int 
+ * @brief Get the time object with the timeval struct
+ * @return unsigned long long -> current time 
  */
 unsigned long long	get_time(void)
 {
@@ -79,7 +79,7 @@ unsigned long long	get_time(void)
 }
 
 /**
- * @brief Create a philos object
+ * @brief Populates the data struct and creates the philo structs
  * @param data -> the complete struct for philo
  */
 void	create_philos(t_data *data)

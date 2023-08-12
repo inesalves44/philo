@@ -6,16 +6,16 @@
 /*   By: idias-al <idias-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:38:33 by idias-al          #+#    #+#             */
-/*   Updated: 2023/07/17 23:46:10 by idias-al         ###   ########.fr       */
+/*   Updated: 2023/08/12 10:58:19 by idias-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 /**
- * @brief function for one philo
- * @param data -> with all the data
- * @return int; 0 if ok, 1 on error
+ * @brief function in case there is only one philosopher.
+ * @param data -> struct that carries all the necessary variables
+ * @return int-> 0 if ok, 1 on error
  */
 int	thread_one_philo(t_data data)
 {
@@ -29,8 +29,8 @@ int	thread_one_philo(t_data data)
 
 /**
  * @brief this function joins the threads and destroys mutexes
- * @param data -> struct of philo
- * @return int 
+ * @param data -> struct with all the data, the control thread
+ * @return int -> returns 0
  */
 int	finish_threads(t_data *data, pthread_t aux)
 {
@@ -54,9 +54,9 @@ int	finish_threads(t_data *data, pthread_t aux)
 }
 
 /**
- * @brief threads for multiple philos (more than one)
+ * @brief This function creates the threads for multiple philosopher's and the control thread.
  * @param data -> struct with all the data
- * @return int -> 1 on error, 0 if ok
+ * @return int -> 1 on error(in case threads aren't created), 0 if ok
  */
 int	thread_multi_philo(t_data *data)
 {

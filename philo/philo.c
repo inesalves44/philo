@@ -6,16 +6,16 @@
 /*   By: idias-al <idias-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 10:45:18 by idias-al          #+#    #+#             */
-/*   Updated: 2023/07/18 18:12:27 by idias-al         ###   ########.fr       */
+/*   Updated: 2023/08/12 10:58:17 by idias-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-/**
- * @brief 
- * 
- * @param philo 
+/** 
+ * @brief This function is just to give the start time of eating to a philosopher.
+ * In this case the first one. It is the start of the meal.
+ * @param philo -> struct for a philo.
  */
 void	start_philo_time(t_philo *philo)
 {
@@ -26,10 +26,9 @@ void	start_philo_time(t_philo *philo)
 }
 
 /**
- * @brief 
- * 
- * @param philo 
- * @return int 
+ * @brief THis function controls the sleep and thinking timne of the philosopher's
+ * @param philo -> struct for a philosopher
+ * @return int -> 1 if a philo is dead, zero if he is tsill alive
  */
 int	philo_thinking_and_sleeping(t_philo *philo)
 {
@@ -51,7 +50,6 @@ int	philo_thinking_and_sleeping(t_philo *philo)
 /** 
  * @note -> the function that is called when philo threads are created 
  * @param philo1 -> struct for one philosopher
- * @return -> a void *
  */
 void	*philo(void *philo1)
 {

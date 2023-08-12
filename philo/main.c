@@ -6,14 +6,15 @@
 /*   By: idias-al <idias-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 10:15:34 by idias-al          #+#    #+#             */
-/*   Updated: 2023/07/17 21:49:40 by idias-al         ###   ########.fr       */
+/*   Updated: 2023/08/12 10:58:15 by idias-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 /** 
- * @note this function start the threads that we need for the philosopher's
+ * @note this function starts the mutexes and destroys them in the end.
+ * It is also where create_philos is called to populate the data struct.
  * @param data ->struct that has the data from the arguments
  * @return -> 1 if error, 0 if ok
  */
